@@ -6,7 +6,7 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.agctonline.snapchirp.LoginActivity">
+                tools:context="com.agctonline.snapchirp.SignUpActivity">
 
     <EditText
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:hint="@string/username_hint"/>
+        android:hint="@string/password_hint"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -28,21 +28,23 @@
         android:layout_alignParentStart="true"
         android:hint="@string/password_hint"/>
 
-    <Button
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/login_label"
-        android:id="@+id/loginButton"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:id="@+id/emailField"
         android:layout_below="@+id/passwordField"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:singleLine="true"/>
+        android:hint="@string/email_hint"/>
 
-    <TextView
-        android:layout_width="wrap_content"
+    <Button
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/signup_text"
-        android:id="@+id/signUpText"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:text="@string/sign_up_button_label"
+        android:id="@+id/button"
+        android:layout_below="@+id/emailField"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
 </RelativeLayout>

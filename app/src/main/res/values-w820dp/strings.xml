@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="password_hint">Enter Password</string>
+
+    <string name="signup_text">Sign Up!</string>
+</resources>
