@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,6 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -36,22 +41,34 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    public static final String TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent loginIntent = new Intent(this, LoginActivity.class);
+        ParseAnalytics.trackAppOpened(getIntent());//from parse
 
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //New_Task declares that login Activity is a new task
-        //Clear_task clears the Main activity task
-        //the goal of this is to not have the back button redirect to the MainActivity
+        ParseUser currentUser = ParseUser.getCurrentUser();//Parse code
 
-        startActivity(loginIntent);
+        if (currentUser == null) {
 
+
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //New_Task declares that login Activity is a new task
+            //Clear_task clears the Main activity task
+            //the goal of this is to not have the back button redirect to the MainActivity
+
+            startActivity(loginIntent);
+        }
+        else {
+
+            Log.i(TAG, currentUser.getUsername());
+        }
         // Set up the action bar.
         final ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -92,8 +109,11 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -103,8 +123,19 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_logout) {
+            ParseUser.logOut();
+            Intent loginIntent = new Intent(this, LoginActivity.class);
+
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            //New_Task declares that login Activity is a new task
+            //Clear_task clears the Main activity task
+            //the goal of this is to not have the back button redirect to the MainActivity
+
+            startActivity(loginIntent);
+            //can refactor this redirect code block, but leave it here for clarity
+
         }
 
         return super.onOptionsItemSelected(item);
