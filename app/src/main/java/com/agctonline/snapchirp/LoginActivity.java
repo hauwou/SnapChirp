@@ -85,7 +85,7 @@ public class LoginActivity extends Activity {
                             } else {
                                 // Signup failed. Look at the ParseException to see what happened.
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
-                                builder.setMessage(e.getMessage())
+                                builder.setMessage(e.getMessage()+ " ASDFDFS")
                                         .setTitle(R.string.login_error_title)
                                         .setPositiveButton(android.R.string.ok, null);//must provide second param
 

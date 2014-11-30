@@ -1,3 +1,4 @@
+<!-- ViewPager is from a support library that is used to support older android versions -->
 <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                                    xmlns:tools="http://schemas.android.com/tools"
                                    android:id="@+id/pager"
