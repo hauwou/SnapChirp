@@ -2,17 +2,16 @@
 <resources>
 
     <string name="app_name">SnapChirp</string>
-    <string name="title_section1">Inbox</string>
-    <string name="title_section2">Friends</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_inbox">Inbox</string>
+    <string name="title_friends">Friends</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_login">Login</string>
     <string name="password_hint">Enter Password</string>
     <string name="username_hint">Enter Username</string>
     <string name="login_label">Login</string>
     <string name="signup_text">Sign Up</string>
-    <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_sign_up">Sign Up</string>
     <string name="email_hint">Enter Email Address</string>
     <string name="sign_up_button_label">Sign Up!</string>
     <string name="signup_error_message">Please provide username, password, email</string>
@@ -21,10 +20,19 @@
     <string name="login_error_title">Oops!</string>
     <string name="error_title">We Are Sorry</string>
     <string name="menu_logout_label">LogOut</string>
-    <string name="empty_inbox_label">No New Messages</string>
+    <string name="empty_inbox_label">No New Messages For You</string>
     <string name="empty_friend_label">You don\'t have any friend, what a loser!</string>
     <string name="menu_add_friends_label">Add Friends</string>
     <string name="menu_edit_friends_label">Edit Friends</string>
     <string name="title_activity_edit_friends">Edit Friends</string>
+    <string name="first_name_hint">First Name</string>
+    <string name="last_name_hint">Last Name</string>
+    <string name="home_town_hint">Hometown</string>
+    <string name="web_address_hint">Personal Web Address</string>
+    <string name="title_activity_friend_profile">Friend Profile</string>
+    <string name="first_name_holder">First Name Holder</string>
+    <string name="last_name_holder">Last Name Holder</string>
+    <string name="hometown_holder">Hometown Holder</string>
+    <string name="web_address_holder">Web Address Holder</string>
 
 </resources>

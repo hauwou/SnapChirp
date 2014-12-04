@@ -33,6 +33,7 @@ public class EditFriendsActivity extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        //must be called before setcontentview
         setContentView(R.layout.activity_edit_friends);
 
         getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
@@ -87,12 +88,12 @@ public class EditFriendsActivity extends ListActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    //@Override
+   /* public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_edit_friends, menu);
         return true;
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -151,6 +152,7 @@ public class EditFriendsActivity extends ListActivity {
 
                         //this inner foreach loop compares the id of each user in the friends list to the user in the overall list and set check mark if they match.  This is a crude method.
                         for (ParseUser friend: friends){
+                            // the == operator does not compare strings correctly in java, use the .equals()
                             if(friend.getObjectId().equals(user.getObjectId())){
                                getListView().setItemChecked(i,true);
                                 //set check mark statement

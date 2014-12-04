@@ -22,6 +22,11 @@ public class SignUpActivity extends Activity {
     protected EditText mPassword;
     protected EditText mEmail;
     protected Button mSignUpButton;
+    protected EditText mFirstName;
+    protected EditText mLastName;
+    protected EditText mHomeTown;
+    protected EditText mWebAddress;
+
 
 
     @Override
@@ -35,14 +40,21 @@ public class SignUpActivity extends Activity {
         mEmail = (EditText)findViewById(R.id.emailField);
         mPassword = (EditText)findViewById(R.id.passwordField);
         mUsername = (EditText)findViewById(R.id.usernameField);
+        mFirstName = (EditText)findViewById(R.id.firstNameField);
+        mLastName = (EditText)findViewById(R.id.lastNameField);
         mSignUpButton = (Button)findViewById(R.id.signUpButton);
-
+        mHomeTown = (EditText)findViewById(R.id.homeTownField);
+        mWebAddress = (EditText)findViewById(R.id.webAddressField);
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = mUsername.getText().toString().trim();
                 String password = mPassword.getText().toString().trim();
                 String email = mEmail.getText().toString().trim();
+                String firstName = mFirstName.getText().toString().trim();
+                String lastName = mLastName.getText().toString().trim();
+                String homeTown = mHomeTown.getText().toString().trim();
+                String webAdrress = mWebAddress.getText().toString().trim();
 
                 if (username.isEmpty() || password.isEmpty() || email.isEmpty()) {
 
@@ -63,19 +75,23 @@ public class SignUpActivity extends Activity {
                     newUser.setUsername(username);
                     newUser.setPassword(password);
                     newUser.setEmail(email);
-                    newUser.signUpInBackground( new SignUpCallback() {
+                    newUser.put(ParseConstants.KEY_FIRST_NAME,firstName);
+                    newUser.put(ParseConstants.KEY_LAST_NAME,lastName);
+                    newUser.put(ParseConstants.KEY_HOME_TOWN,homeTown);
+                    newUser.put(ParseConstants.KEY_WEB_ADDRESS,webAdrress);
+
+                    newUser.signUpInBackground(new SignUpCallback() {
                         @Override
                         public void done(ParseException e) {
                             setProgressBarIndeterminateVisibility(false);//turn off progress bar
-                            if (e==null) {
+                            if (e == null) {
                                 //Success
                                 Intent goToMainActivityIntent = new Intent(SignUpActivity.this, MainActivity.class);
                                 goToMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 goToMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 startActivity(goToMainActivityIntent);
 
-                            }
-                            else {
+                            } else {
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
                                 builder.setMessage(e.getMessage())

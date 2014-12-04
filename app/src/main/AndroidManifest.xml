@@ -40,6 +40,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.agctonline.snapchirp.MainActivity" />
         </activity>
+        <activity
+            android:name="com.agctonline.snapchirp.FriendProfile"
+            android:label="@string/title_activity_friend_profile"
+            android:parentActivityName="com.agctonline.snapchirp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.agctonline.snapchirp.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

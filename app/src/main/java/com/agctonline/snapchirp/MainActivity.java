@@ -1,29 +1,20 @@
 package com.agctonline.snapchirp;
 
 import android.app.ActionBar;
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentPagerAdapter;
-
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.ListFragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.Window;
 
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
-
-import java.util.Locale;
 
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -47,6 +38,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main);
 
         ParseAnalytics.trackAppOpened(getIntent());//from parse
@@ -76,7 +68,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager()); // Added context as 1st param to match the constructor in the SectionsPagerAdapter refactored class. Also, must use getSupportFragmentManager instead of getFragmentmanager
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -166,7 +158,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    /*public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -176,9 +168,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            //return PlaceholderFragment.newInstance(position + 1);
 
-            //return new InboxFragment();
+             return new FriendsFragment();
 
 
         }
@@ -202,22 +194,22 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
             return null;
         }
-    }
+    }*/
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
-        /**
+    /*public static class PlaceholderFragment extends Fragment {
+        *//**
          * The fragment argument representing the section number for this
          * fragment.
-         */
+         *//*
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /**
+        *//**
          * Returns a new instance of this fragment for the given section
          * number.
-         */
+         *//*
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -249,6 +241,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             //sectionNumText.setText((getArguments().getString(ARG_SECTION_NUMBER)));
             return rootView;
         }
-    }
+    }*/
 
 }
