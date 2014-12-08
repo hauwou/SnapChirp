@@ -34,5 +34,17 @@
     <string name="last_name_holder">Last Name Holder</string>
     <string name="hometown_holder">Hometown Holder</string>
     <string name="web_address_holder">Web Address Holder</string>
+    <string name="menu_camera_label">Camera</string>
+    <string name="save_gallery_error">Saving to gallery error</string>
+
+    <string-array name="camera_choices">
+        <item>Take Picture</item>
+        <item>Take Video</item>
+        <item>Choose Picture</item>
+        <item>Choose Video</item>
+    </string-array>
+
+    <string name="title_activity_recipients">Choose Recipients</string>
+    <string name="empty_recipients_message">Choose a friend first!</string>
 
 </resources>

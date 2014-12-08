@@ -43,8 +43,9 @@ public class FriendProfile extends Activity {
         //Toast.makeText(this, mFriendID, Toast.LENGTH_LONG).show();
 
 
-        //mProfile = ParseUser.getQuery();
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+        // MUST USE underscoreUser (_User) for class name
 
         query.getInBackground(mFriendID, new GetCallback<ParseObject>() {
             public void done(ParseObject friendProfile, ParseException e) {
