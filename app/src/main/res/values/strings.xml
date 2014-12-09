@@ -47,5 +47,6 @@
     <string name="title_activity_recipients">Choose Recipients</string>
     <string name="empty_recipients_message">Choose a friend first!</string>
     <string name="menu_recipients_send">Send</string>
+    <string name="title_activity_view_image">SnapChirp</string>
 
 </resources>
