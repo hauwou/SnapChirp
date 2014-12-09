@@ -9,6 +9,9 @@ import android.widget.ImageView;
 
 import com.squareup.picasso.Picasso;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 public class ViewImageActivity extends Activity {
 
@@ -21,6 +24,15 @@ public class ViewImageActivity extends Activity {
         Uri imageUri = getIntent().getData();
         //Use picasso library to load web image into imageview
         Picasso.with(this).load(imageUri.toString()).into(imageView);
+
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                //after 10 secs, this "run" method will run
+                finish();//take back to inbox
+            }
+        }, 5*1000);
 
 
     }

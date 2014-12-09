@@ -68,18 +68,31 @@ public class InboxFragment extends ListFragment {
                         friendNames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
                         i++;
                     }
-                    MessageAdapter adapter =new MessageAdapter(getListView().getContext(), mMessages);
 
-                    //old code for standard adapter
+
+                    //The if condition checks if the adapter is set and set the adapter
+                    if(getListView().getAdapter()==null) {
+                        MessageAdapter adapter = new MessageAdapter(getListView().getContext(), mMessages);
+
+                        //old code for standard adapter
                     /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_expandable_list_item_1, friendNames);
                     */
-                    setListAdapter(adapter);
+                        setListAdapter(adapter);
 
+
+                    }
+                    else {
+
+                        //refill the adapter if it has already been set
+                        ((MessageAdapter)getListView().getAdapter()).refill(mMessages);
+                    }
 
 
 
                 }
-                else {}
+                else {
+                    //error
+                }
 
             }
         });
