@@ -287,7 +287,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             }
 
             Intent recipientsIntent = new Intent(this, RecipientsActivity.class);
-            recipientsIntent.setData(mMediaUri);
+            recipientsIntent.setData(mMediaUri);//attach file Uri to intent
+            String fileType;
+            if(requestCode==CHOOSE_PHOTO_REQUEST || requestCode == TAKE_PHOTO_REQUEST)
+            {
+                fileType = "photo";
+            }
+            else
+            {
+                fileType = "video";
+            }
+            recipientsIntent.putExtra(ParseConstants.KEY_FILE_TYPE,fileType);//attach file type to intent
             startActivity(recipientsIntent);
         }
         else if(resultCode != RESULT_CANCELED){
