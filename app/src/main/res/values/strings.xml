@@ -9,8 +9,8 @@
     <string name="title_activity_login">Login</string>
     <string name="password_hint">Enter Password</string>
     <string name="username_hint">Enter Username</string>
-    <string name="login_label">Login</string>
-    <string name="signup_text">Sign Up</string>
+    <string name="login_label">LOGIN</string>
+    <string name="signup_text">Don\'t Have An Account? Sign Up Now!</string>
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="email_hint">Enter Email Address</string>
     <string name="sign_up_button_label">Sign Up!</string>
@@ -48,5 +48,7 @@
     <string name="empty_recipients_message">Choose a friend first!</string>
     <string name="menu_recipients_send">Send</string>
     <string name="title_activity_view_image">SnapChirp</string>
+    <string name="subtitle">For Your Eyes Only</string>
+    <string name="signup_cancel">CANCEL</string>
 
 </resources>

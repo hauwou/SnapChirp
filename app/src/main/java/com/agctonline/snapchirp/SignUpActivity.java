@@ -1,5 +1,6 @@
 package com.agctonline.snapchirp;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -26,6 +27,7 @@ public class SignUpActivity extends Activity {
     protected EditText mLastName;
     protected EditText mHomeTown;
     protected EditText mWebAddress;
+    protected Button mCancel;
 
 
 
@@ -37,6 +39,10 @@ public class SignUpActivity extends Activity {
 
         setContentView(R.layout.activity_sign_up);
 
+        //hide action bar
+        ActionBar actionBar = getActionBar();
+        actionBar.hide();
+
         mEmail = (EditText)findViewById(R.id.emailField);
         mPassword = (EditText)findViewById(R.id.passwordField);
         mUsername = (EditText)findViewById(R.id.usernameField);
@@ -45,6 +51,16 @@ public class SignUpActivity extends Activity {
         mSignUpButton = (Button)findViewById(R.id.signUpButton);
         mHomeTown = (EditText)findViewById(R.id.homeTownField);
         mWebAddress = (EditText)findViewById(R.id.webAddressField);
+        mCancel = (Button)findViewById(R.id.cancelButton);
+
+        mCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();//close current activity and return to previous Activity
+            }
+        });
+
+
         mSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

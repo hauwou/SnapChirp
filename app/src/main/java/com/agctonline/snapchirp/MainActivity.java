@@ -360,14 +360,17 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 loginIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loginIntent);
+                break;
             case R.id.action_edit_friends:
                 Intent editFriendsIntent = new Intent(this, EditFriendsActivity.class);
                 startActivity(editFriendsIntent);
+                break;
             case R.id.action_camera:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setItems(R.array.camera_choices, mDialogListener); //the second param is the action when item is clicked -- null = nothing happens, or attach a dialog listener as seen. Listener is defined up top
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);

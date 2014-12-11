@@ -2,7 +2,28 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+        <item name="android:listViewStyle">@style/AppTheme.listViewPurpleBackground</item>
+        <item name="android:gridViewStyle">@style/AppTheme.listViewPurpleBackground</item>
+    </style>
+    
+    <style name="AppTheme.listViewPurpleBackground">
+        <item name="android:background">@color/light_purple_background</item>
+        <item name="android:divider">@null</item>
+    </style>
+    
+    <style name="AuthBackground">
+        <item name="android:background">@drawable/background_fill</item>
+
+    </style>
+    <style name="AuthBackgroundImage">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:contentDescription">SnapChirp background image</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+
+        <item name="android:scaleType">fitStart</item>
+        <item name="android:src">@drawable/background</item>
     </style>
 
 </resources>
