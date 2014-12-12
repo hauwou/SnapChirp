@@ -9,8 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -22,11 +26,12 @@ import com.parse.SaveCallback;
 import java.util.List;
 
 
-public class EditFriendsActivity extends ListActivity {
+public class EditFriendsActivity extends Activity {
     public final static String TAG = EditFriendsActivity.class.getSimpleName();
     protected List<ParseUser> mUsers;
     protected ParseRelation<ParseUser> mFriendsRelation;
     protected ParseUser mCurrentUser;
+    protected GridView mGridView;
 
 
     @Override
@@ -34,11 +39,59 @@ public class EditFriendsActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         //must be called before setcontentview
-        setContentView(R.layout.activity_edit_friends);
+        setContentView(R.layout.fragment_friends_grid);
 
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGridView=(GridView)findViewById(R.id.friendsGrid);
+        //getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE); code for listView
+        mGridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE);
         //built in method of ListActivity to set ListView options
+        mGridView.setOnItemClickListener(mOnItemClickListener);
+        //setOnclicklistener is required for gridview, but not Listview because listactivity can detect clicks without setting a listener.
+
+
+        TextView emptyTextView = (TextView)findViewById(android.R.id.empty); // create this variable for hide routine because gridView does not hide empty view automatically, must manage manually
+        mGridView.setEmptyView(emptyTextView);
     }
+
+
+    protected AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener(){
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //the "view" param is the root relative layout container of the user_item.xml layout, so it will be used to find the view ids.
+
+            ImageView checkImageView = (ImageView)view.findViewById(R.id.checkImageView);
+            //if omit the "view" param, the user position will not be correctly applied, so check marks will be incorrectly applied.
+
+
+            //reuse code from onclicklistview, with mods
+            if(mGridView.isItemChecked(position)) {
+
+                mFriendsRelation.add(mUsers.get(position)); // this statement adds the users that were tapped on to the relationship of current user. Parse creates in the background a relationship linkage.
+                checkImageView.setVisibility(View.VISIBLE);
+
+
+            }
+            else {
+
+                mFriendsRelation.remove(mUsers.get(position));
+                checkImageView.setVisibility(View.INVISIBLE);
+
+            }
+            mCurrentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        //save success
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            });
+
+
+        }
+    };
+
+
 
     @Override
     protected void onResume() {
@@ -66,8 +119,17 @@ public class EditFriendsActivity extends ListActivity {
                         userNames[i]=user.getUsername();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditFriendsActivity.this, android.R.layout.simple_list_item_checked, userNames);
-                    setListAdapter(adapter);
+
+                    if(mGridView.getAdapter()==null){
+                        UserAdapter adapter = new UserAdapter(EditFriendsActivity.this, mUsers);
+                        mGridView.setAdapter(adapter);
+                    }
+                    else {
+                        ((UserAdapter)mGridView.getAdapter()).refill(mUsers);
+                    }
+
+                    /*ArrayAdapter<String> adapter = new ArrayAdapter<String>(EditFriendsActivity.this, android.R.layout.simple_list_item_checked, userNames);
+                    setListAdapter(adapter);*/
 
                     addFriendCheckMarks();//this function loops through the list of users and add check marks if they are "your" friends
 
@@ -110,7 +172,7 @@ public class EditFriendsActivity extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
+/*    @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
@@ -136,7 +198,7 @@ public class EditFriendsActivity extends ListActivity {
         });
 
 
-    }
+    }*/
 
     private void addFriendCheckMarks(){
         mFriendsRelation.getQuery().findInBackground(new FindCallback<ParseUser>() {
@@ -154,7 +216,7 @@ public class EditFriendsActivity extends ListActivity {
                         for (ParseUser friend: friends){
                             // the == operator does not compare strings correctly in java, use the .equals()
                             if(friend.getObjectId().equals(user.getObjectId())){
-                               getListView().setItemChecked(i,true);
+                               mGridView.setItemChecked(i, true);
                                 //set check mark statement
                             }
                         }

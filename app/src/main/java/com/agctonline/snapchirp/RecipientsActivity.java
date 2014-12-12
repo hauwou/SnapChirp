@@ -10,8 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.parse.FindCallback;
@@ -27,7 +31,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecipientsActivity extends ListActivity {
+public class RecipientsActivity extends Activity {
+//changed ListActivity to Activity when switched over to gridview
 
     public final static String TAG = RecipientsActivity.class.getSimpleName();
     protected List<ParseUser> mFriends;
@@ -37,13 +42,22 @@ public class RecipientsActivity extends ListActivity {
     protected MenuItem mSendMenuItem;
     protected Uri mMediaUri;
     protected String mFileType;
+    protected GridView mGridView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.activity_recipients);
-        getListView().setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        setContentView(R.layout.fragment_friends_grid);
+
+        mGridView = (GridView) findViewById(R.id.friendsGrid);
+        mGridView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGridView.setOnItemClickListener(mOnItemClickListener);
+        //setOnclicklistener is required for gridview, but not Listview because listactivity can detect clicks without setting a listener.
+
+        TextView emptyTextView = (TextView)findViewById(android.R.id.empty); // create this variable for hide routine because gridView does not hide empty view automatically, must manage manually
+        mGridView.setEmptyView(emptyTextView);
+
         mMediaUri = getIntent().getData();
         mFileType = getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
     }
@@ -74,10 +88,20 @@ public class RecipientsActivity extends ListActivity {
                         mObjectIDs[i] = friend.getObjectId();
                         i++;
                     }
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_checked, friendNames);
+
+                    //custom adapter code
+                    if(mGridView.getAdapter()==null){
+                        UserAdapter adapter = new UserAdapter(RecipientsActivity.this, mFriends);
+                        mGridView.setAdapter(adapter);
+                    }
+                    else {
+                        ((UserAdapter)mGridView.getAdapter()).refill(mFriends);
+                    }
+
+                    //ArrayAdapter<String> adapter = new ArrayAdapter<String>(getListView().getContext(), android.R.layout.simple_list_item_checked, friendNames);
                     //must use getListView().getContext() to get to the context instead of using FriendsFragment.this, because this is inside a fragment class and not a parent activity class
 
-                    setListAdapter(adapter);
+                    //setListAdapter(adapter);
 
 
                     //onListItemClick(getListView(),getView(), getSelectedItemPosition(), getSelectedItemId()); //use Control + Space to fill in the params
@@ -99,7 +123,44 @@ public class RecipientsActivity extends ListActivity {
         });
     }
 
-    @Override
+    protected AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener(){
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            //the "view" param is the root relative layout container of the user_item.xml layout, so it will be used to find the view ids.
+
+            ImageView checkImageView = (ImageView)view.findViewById(R.id.checkImageView);
+            //if omit the "view" param, the user position will not be correctly applied, so check marks will be incorrectly applied.
+
+            if(mGridView.getCheckedItemCount() > 0){
+                mSendMenuItem.setVisible(true);
+            }
+            else {
+                mSendMenuItem.setVisible(false);
+            }
+
+            //reuse code from onclicklistview, with mods
+            if(mGridView.isItemChecked(position)) {
+                checkImageView.setVisibility(View.VISIBLE);
+            }
+            else {
+                checkImageView.setVisibility(View.INVISIBLE);
+            }
+            mCurrentUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e != null) {
+                        //save success
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+            });
+
+
+        }
+    };
+
+
+/*    @Override
     //This code block listens for checked friends, if 1 friend is checked, show the send Icon
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -109,7 +170,7 @@ public class RecipientsActivity extends ListActivity {
         else {
             mSendMenuItem.setVisible(false);
         }
-    }
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -197,9 +258,9 @@ public class RecipientsActivity extends ListActivity {
     protected ArrayList<String> getRecipientIds() {
         //helper method
         ArrayList<String> recipientIds = new ArrayList<String>();
-        for(int i = 0; i<getListView().getCount(); i++ )
+        for(int i = 0; i<mGridView.getCount(); i++ )
         {
-            if(getListView().isItemChecked(i)) {
+            if(mGridView.isItemChecked(i)) {
                 recipientIds.add(mFriends.get(i).getObjectId());
             }
         }

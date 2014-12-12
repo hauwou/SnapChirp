@@ -140,6 +140,7 @@ public class InboxFragment extends ListFragment {
     }
 
     @Override
+    //if this method is used in a ListActivity or ListFragment, this method will be called automatically without the required used of setOnItemClickListener method.
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
@@ -158,7 +159,7 @@ public class InboxFragment extends ListFragment {
         else {
             //view video
             Intent gotoViewVideo = new Intent(Intent.ACTION_VIEW, fileUri);
-            gotoViewVideo.setDataAndType(fileUri,"video/*");
+            gotoViewVideo.setDataAndType(fileUri,"video");
             startActivity(gotoViewVideo);
         }
 
