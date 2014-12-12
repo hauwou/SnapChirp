@@ -6,6 +6,7 @@ package com.agctonline.snapchirp;
 //these standard and v13 imports go together
 import android.content.Context;
 //import android.app.ListFragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import java.util.Locale;
 
@@ -27,7 +28,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public ListFragment getItem(int position) {
+    public Fragment getItem(int position) {
+        //changed return type from ListFragment to Fragment after switching to friends gridView
+
         // getItem is called to instantiate the fragment for the given page.
         // Return a PlaceholderFragment (defined as a static inner class below).
         //return PlaceholderFragment.newInstance(position + 1);
@@ -36,7 +39,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new InboxFragment();
             case 1:
-                return new FriendsFragment();
+                return new FriendsFragmentGrid();
         }
         return null;
 

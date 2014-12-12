@@ -3,7 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:listViewStyle">@style/AppTheme.listViewPurpleBackground</item>
-        <item name="android:gridViewStyle">@style/AppTheme.listViewPurpleBackground</item>
+        <item name="android:gridViewStyle">@style/AppTheme.listViewPurpleBackground.GridView</item>
+    </style>
+
+    <style name="AppTheme.listViewPurpleBackground.GridView">
+        <item name="android:padding">@dimen/user_grid_spacing</item>
     </style>
     
     <style name="AppTheme.listViewPurpleBackground">
