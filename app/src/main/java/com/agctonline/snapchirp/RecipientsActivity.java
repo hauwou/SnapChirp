@@ -21,7 +21,9 @@ import android.widget.Toast;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
@@ -216,6 +218,8 @@ public class RecipientsActivity extends Activity {
             public void done(ParseException e) {
                 if(e==null){
                     Toast.makeText(RecipientsActivity.this, "send successful",Toast.LENGTH_LONG).show();
+
+                    sendPushNotifications();
                 }
                 else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(RecipientsActivity.this);
@@ -227,6 +231,20 @@ public class RecipientsActivity extends Activity {
                 }
             }
         });
+    }
+
+    protected void sendPushNotifications() {
+        //this method send push notifications using codes from Parse.
+        ParseQuery query = ParseInstallation.getQuery();
+        query.whereContainedIn(ParseConstants.KEY_USER_ID, getRecipientIds());//the where part of where contained in is the userid field, the containedIn part is the arraylist of recipientIds. So, the query is looking in the userId field of the installation objects and find the installation objects that have userIds that match the Ids recipientIds list.
+
+        //Send Push
+        ParsePush push = new ParsePush();
+        push.setQuery(query);
+        push.setMessage(getString(R.string.push_message, ParseUser.getCurrentUser().getUsername()));// demonstrate usage of placeholder in the string.
+        push.sendInBackground();
+
+
     }
 
     protected ParseObject createMessage() {

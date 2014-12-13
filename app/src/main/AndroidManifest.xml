@@ -1,75 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.agctonline.snapchirp" >
+<manifest
+    package="com.agctonline.snapchirp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
+        android:required="true"/>
+
+    <!-- Parse Code  -->
+
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <permission
+        android:name="com.agctonline.snapchirp.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.agctonline.snapchirp.permission.C2D_MESSAGE"/>
+    <!-- End Parse Code  -->
 
     <application
         android:name="com.agctonline.snapchirp.SnapChirpApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name="com.agctonline.snapchirp.MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name="com.agctonline.snapchirp.LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.agctonline.snapchirp.SignUpActivity"
             android:label="@string/title_activity_sign_up"
             android:parentActivityName="com.agctonline.snapchirp.LoginActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name="com.agctonline.snapchirp.EditFriendsActivity"
             android:label="@string/title_activity_edit_friends"
-            android:parentActivityName="com.agctonline.snapchirp.MainActivity" >
+            android:parentActivityName="com.agctonline.snapchirp.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.agctonline.snapchirp.MainActivity" />
+                android:value="com.agctonline.snapchirp.MainActivity"/>
         </activity>
         <activity
             android:name="com.agctonline.snapchirp.FriendProfile"
             android:label="@string/title_activity_friend_profile"
-            android:parentActivityName="com.agctonline.snapchirp.MainActivity" >
+            android:parentActivityName="com.agctonline.snapchirp.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.agctonline.snapchirp.MainActivity" />
+                android:value="com.agctonline.snapchirp.MainActivity"/>
         </activity>
         <activity
             android:name="com.agctonline.snapchirp.RecipientsActivity"
             android:label="@string/title_activity_recipients"
-            android:parentActivityName="com.agctonline.snapchirp.MainActivity" >
+            android:parentActivityName="com.agctonline.snapchirp.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.agctonline.snapchirp.MainActivity" />
+                android:value="com.agctonline.snapchirp.MainActivity"/>
         </activity>
         <activity
             android:name="com.agctonline.snapchirp.ViewImageActivity"
             android:label="@string/title_activity_view_image"
-            android:parentActivityName="com.agctonline.snapchirp.MainActivity" >
+            android:parentActivityName="com.agctonline.snapchirp.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.agctonline.snapchirp.MainActivity" />
+                android:value="com.agctonline.snapchirp.MainActivity"/>
         </activity>
+
+
+        <!--Parse Code  -->
+        <service android:name="com.parse.PushService"/>
+
+        <receiver android:name="com.parse.ParseBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.agctonline.snapchirp.CustomReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.parse.push.intent.RECEIVE"/>
+                <action android:name="com.parse.push.intent.DELETE"/>
+                <action android:name="com.parse.push.intent.OPEN"/>
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.parse.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION"/>
+
+                <!--
+                  IMPORTANT: Change "com.parse.starter" to match your app's package name.
+                -->
+                <category android:name="com.agctonline.snapchirp"/>
+            </intent-filter>
+        </receiver>
+        <!--End Parse Code  -->
+
+
     </application>
 
 </manifest>

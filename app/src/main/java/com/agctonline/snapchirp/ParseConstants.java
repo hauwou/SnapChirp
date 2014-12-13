@@ -22,6 +22,7 @@ public final class ParseConstants {
     protected static final String KEY_FILE_TYPE = "fileType";
     protected static final String KEY_RECIPIENT_IDS = "RecipientIds";
     protected static final String KEY_CREATED_AT = "createdAt";
+    protected static final String KEY_USER_ID = "userId";
 
 
 }

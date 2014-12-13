@@ -101,7 +101,9 @@ public class SignUpActivity extends Activity {
                         public void done(ParseException e) {
                             setProgressBarIndeterminateVisibility(false);//turn off progress bar
                             if (e == null) {
-                                //Success
+                                //Sign Up Success
+                                SnapChirpApplication.updateParseInstallation(ParseUser.getCurrentUser()); // call  the updateParseinstallation object method in the application file. It is a static method,so no need to declare a new object. Passed in the "user" object so that the method can get the objectId
+
                                 Intent goToMainActivityIntent = new Intent(SignUpActivity.this, MainActivity.class);
                                 goToMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 goToMainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

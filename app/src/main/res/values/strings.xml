@@ -50,5 +50,6 @@
     <string name="title_activity_view_image">SnapChirp</string>
     <string name="subtitle">For Your Eyes Only</string>
     <string name="signup_cancel">CANCEL</string>
+    <string name="push_message">"%s Chirped you!"</string>
 
 </resources>
